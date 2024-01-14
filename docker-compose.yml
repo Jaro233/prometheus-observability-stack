@@ -26,7 +26,7 @@ services:
       - 9100:9100
     restart: always
     networks:
-      - monitor
+      - monitoring
 
   alertmanager:
     image: prom/alertmanager:latest
@@ -39,7 +39,7 @@ services:
       - --config.file=/etc/alertmanager/alertmanager.yml
     restart: always
     networks:
-      - monitor
+      - monitoring
 
 networks:
   monitoring:
