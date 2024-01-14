@@ -4,6 +4,23 @@
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
+# Add Swap Memory of 2GB
+sudo swapon --show
+free -h
+df -h
+sudo fallocate -l 2G /swapfile
+ls -lh /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon --show
+free -h
+cat /proc/sys/vm/swappiness
+sudo sysctl vm.swappiness=10
+cat /proc/sys/vm/vfs_cache_pressure
+sudo sysctl vm.vfs_cache_pressure=50
+
 # Add Docker’s official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
