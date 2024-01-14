@@ -20,7 +20,7 @@ services:
       - monitoring
 
   alertmanager:
-    image: prom/alertmanager:v0.21.0
+    image: prom/alertmanager:latest
     volumes:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     ports:
@@ -29,7 +29,7 @@ services:
       - monitoring
 
   nodeexporter:
-    image: prom/node-exporter:v1.1.2
+    image: prom/node-exporter:latest
     ports:
       - "9100:9100"
     networks:
