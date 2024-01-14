@@ -1,27 +1,21 @@
 global:
-  smtp_smarthost: "smtp.zoho.eu:587"
-  smtp_from: "alertmanager@example.com"
-  smtp_auth_username: "jaroslaw.waliczek@devops-projects.pl"
-  smtp_auth_password: ""
+  resolve_timeout: 2m
 
 route:
-  group_by: ["alertname"]
-  group_wait: 10s
-  group_interval: 10m
-  repeat_interval: 1h
-  receiver: "default-receiver"
-  routes:
-    - match:
-        severity: critical
-      receiver: "slack-notifications"
+  receiver: "slack-notifications" # Change the receiver to the email configuration
 
 receivers:
-  - name: "default-receiver"
+  - name: "email-notifications" # Define the email receiver
     email_configs:
-      - to: "jaroslaw.waliczek@devops-projects.pl"
+      - to: "jaroslaw.waliczek@devops-projects.pl" # Replace with your email address
+        from: "prometheus@example.com" # Replace with the sender email address
+        smarthost: "smtp.zoho.eu:587" # Replace with your SMTP server address and port
+        auth_username: "jaroslaw.waliczek@devops-projects.pl" # Replace with your SMTP username
+        auth_password: "" # Replace with your SMTP password
+        send_resolved: true
 
   - name: "slack-notifications"
     slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: "#alerts"
-        text: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+      - api_url: "https://hooks.slack.com/services/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" # Replace with your Slack Incoming Webhook URL
+        channel: "#alerts" # Replace with the Slack channel or user where you want to send notifications
+        send_resolved: true # Set to true to send resolved alerts as well
